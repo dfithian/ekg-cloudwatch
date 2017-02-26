@@ -136,9 +136,7 @@ diffSamples prev !curr = Map.foldlWithKey' combine Map.empty curr
       | otherwise = Just $ Metrics.Label n2
     diffMetric (Metrics.Distribution d1) (Metrics.Distribution d2)
       | Distribution.count d1 == Distribution.count d2 = Nothing
-      | otherwise =
-        Just . Metrics.Distribution $
-        d2 {Distribution.count = Distribution.count d2 - Distribution.count d1}
+      | otherwise = Just $ Metrics.Distribution d2
     diffMetric _ _ = Nothing
 
 flushSample :: CloudWatchEnv -> Metrics.Sample -> IO ()
